@@ -4,9 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="main.js" defer></script>
   <title>Notes</title>
 </head>
-<body>
-  
+<body> 
+  <div id="noteInputArea">
+  <input id="header" type="text" placeholder="header or delete Num">
+  <input id="body" type="text" placeholder ="body">
+  <button id="post" onclick="postNote()">Post Note!</button>
+  <button id="delete" onclick="deleteNote()">Delete Note!</button>
+  </div>
+  <div id="mainContainer"></div>
 </body>
 </html>
