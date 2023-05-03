@@ -18,9 +18,39 @@ if (requestOption.method === 'POST') {
         for (let note in noteData){
             let currentNote = noteData[note];
 
+            //create a post it note to place data in ------------
             let noteDiv = document.createElement('div');
+
+            //add title and body of note -------------------
+            let titleDiv = document.createElement('div');
+            let bodyDiv = document.createElement("div");
             noteDiv.classList.add("note");
-            noteDiv.append((Number(note) + 1) + " " + currentNote.title + ": " + currentNote.body + " " + currentNote.id);
+            titleDiv.classList.add("title");
+            bodyDiv.classList.add("body");
+            titleDiv.setAttribute('data-type', 'title');
+            bodyDiv.setAttribute('data-type', 'body')
+            titleDiv.append("Note #" + (Number(note) + 1) + " " + currentNote.title)
+            bodyDiv.append(currentNote.body + " " + currentNote.id)
+
+            //create a delete button inside of every note---------------
+            let deleteButton = document.createElement("button");
+            deleteButton.append("delete")
+            deleteButton.setAttribute('id', currentNote.id);
+            deleteButton.setAttribute('data-action', 'deleteButton')
+
+            //create edit button inside of every note -----------------
+            let editButton = document.createElement("button");
+            editButton.append("Edit");
+            editButton.setAttribute('data-id', currentNote.id);
+            editButton.setAttribute('data-action', 'editButton')
+
+            //append all elements to noteDiv-------------------------
+            noteDiv.append(titleDiv)
+            noteDiv.append(deleteButton)
+            noteDiv.append(editButton)
+            noteDiv.append(bodyDiv)
+
+            //append noteDiv to page------------------------------
             mainContainer.append(noteDiv);
         }} else {
            
@@ -68,9 +98,27 @@ let postNote = function() {
     fetchSystem("POST", header.value, body.value)
 }
 
-let deleteNote = function() {
-    console.log(mainContainer)
-    fetchSystem("DELETE", header.value)
+//-------click event listners -------------------
+mainContainer.onclick = function(event) {
+    let target = event.target;
+    if (target.tagName != 'BUTTON') return;
+    if (target.dataset.action === 'deleteButton'){
+    fetchSystem("DELETE", target.id)
+    }
+
+    if (target.dataset.action === 'editButton'){
+        let note = event.target.closest('div');
+        let body = note.lastChild;
+        let bodyText = body.innerHTML
+        let title = note.firstChild;
+
+        note.removeChild(body);
+        let newBody = document.createElement('input')
+        newBody.setAttribute('type', 'text');
+        newBody.value = bodyText;
+
+        note.append(newBody)
+    }
 }
 
 let createNoteCard = function(noteData) {

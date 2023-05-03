@@ -1,0 +1,24 @@
+.note {
+    border-style: solid;
+    background-color: powderblue;
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+    min-height: 250px;
+}
+
+#mainContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.body {
+    text-align: center;
+    padding-top: 10px;
+}
